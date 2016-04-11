@@ -223,7 +223,7 @@ static int linuxspi_open(PROGRAMMER* pgm, char* port)
     //export reset pin
     buf = malloc(32);
     sprintf(buf, "%d", pgm->pinno[PIN_AVR_RESET] &~PIN_INVERSE);
-    if (linuxspi_gpio_op_wr(pgm, LINUXSPI_GPIO_EXPORT, pgm->pinno[PIN_AVR_RESET], buf) < 0)
+    if (linuxspi_gpio_op_wr(pgm, LINUXSPI_GPIO_EXPORT, pgm->pinno[PIN_AVR_RESET] &~PIN_INVERSE, buf) < 0)
     {
         free(buf);
         return -1;
@@ -232,7 +232,7 @@ static int linuxspi_open(PROGRAMMER* pgm, char* port)
     
     //set reset to output active and write initial value at same time
     //this prevents glitches https://www.kernel.org/doc/Documentation/gpio/sysfs.txt
-    if (linuxspi_gpio_op_wr(pgm, LINUXSPI_GPIO_DIRECTION, pgm->pinno[PIN_AVR_RESET], pgm->pinno[PIN_AVR_RESET]&PIN_INVERSE ? "high" : "low") < 0)
+    if (linuxspi_gpio_op_wr(pgm, LINUXSPI_GPIO_DIRECTION, pgm->pinno[PIN_AVR_RESET] &~PIN_INVERSE, pgm->pinno[PIN_AVR_RESET]&PIN_INVERSE ? "high" : "low") < 0)
     {
         return -1;
     }
@@ -248,12 +248,12 @@ static void linuxspi_close(PROGRAMMER* pgm)
     char* buf;
     
     //set reset to input
-    linuxspi_gpio_op_wr(pgm, LINUXSPI_GPIO_DIRECTION, pgm->pinno[PIN_AVR_RESET], "in");
+    linuxspi_gpio_op_wr(pgm, LINUXSPI_GPIO_DIRECTION, pgm->pinno[PIN_AVR_RESET]&~PIN_INVERSE, "in");
     
     //unexport reset
     buf = malloc(32);
-    sprintf(buf, "%d", pgm->pinno[PIN_AVR_RESET]);
-    linuxspi_gpio_op_wr(pgm, LINUXSPI_GPIO_UNEXPORT, pgm->pinno[PIN_AVR_RESET], buf);
+    sprintf(buf, "%d", pgm->pinno[PIN_AVR_RESET]&~PIN_INVERSE);
+    linuxspi_gpio_op_wr(pgm, LINUXSPI_GPIO_UNEXPORT, pgm->pinno[PIN_AVR_RESET]&~PIN_INVERSE, buf);
 }
 
 static void linuxspi_disable(PROGRAMMER* pgm)
