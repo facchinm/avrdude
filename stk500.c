@@ -49,6 +49,7 @@ struct pdata
 {
   unsigned char ext_addr_byte; /* Record ext-addr byte set in the
 				* target device (if used) */
+  unsigned char reset_pin;
 };
 
 #define PDATA(pgm) ((struct pdata *)(pgm->cookie))
@@ -423,11 +424,16 @@ static int stk500_initialize(PROGRAMMER * pgm, AVRPART * p)
   // MIB510 does not need extparams
   if (strcmp(ldata(lfirst(pgm->id)), "mib510") == 0)
     n_extparms = 0;
+  else if ((maj == 1) && (min == 18))
+    n_extparms = 5;   //arduino multi isp
   else if ((maj > 1) || ((maj == 1) && (min > 10)))
     n_extparms = 4;
   else
     n_extparms = 3;
 
+fprintf(stderr,
+            "%s: stk500_initialize(): n_extparms %d mayor %d minor %d \n",
+            progname, n_extparms,maj, min);
   tries = 0;
 
  retry:
@@ -458,7 +464,7 @@ static int stk500_initialize(PROGRAMMER * pgm, AVRPART * p)
     }
   }
 
-#if 0
+#if 1
   avrdude_message(MSG_INFO, "%s: stk500_initialize(): n_extparms = %d\n",
           progname, n_extparms);
 #endif
@@ -579,12 +585,16 @@ static int stk500_initialize(PROGRAMMER * pgm, AVRPART * p)
     else
       buf[1] = 0;
 
-
-    if (n_extparms == 4) {
+    if (n_extparms >= 4) {
       if (p->reset_disposition == RESET_DEDICATED)
         buf[4] = 0;
       else
         buf[4] = 1;
+    }
+
+    if (n_extparms == 5) {
+        fprintf(stderr, "%s: sending extparam for arduino multi isp\n", progname);
+        buf[5] = PDATA(pgm)->reset_pin;
     }
 
     rc = stk500_set_extended_parms(pgm, n_extparms+1, buf);
@@ -1283,6 +1293,35 @@ static void stk500_teardown(PROGRAMMER * pgm)
   free(pgm->cookie);
 }
 
+static int stk500_parseextparms(PROGRAMMER * pgm, LISTID extparms)
+{
+  LNODEID ln;
+  int rv  = 0;
+  char *extended_param;
+
+  for (ln = lfirst(extparms); ln; ln = lnext(ln)) {
+    extended_param = ldata(ln);
+
+    if (strncmp(extended_param, "reset_pin=", strlen("reset_pin=")) == 0) {
+      unsigned int ub;
+      if (sscanf(extended_param, "reset_pin=%u", &ub) != 1) {
+        fprintf(stderr,
+                "%s: stk500_parseextparms(): invalid reset pin '%s'\n",
+                progname, extended_param);
+        rv = -1;
+        continue;
+      } else {
+        PDATA(pgm)->reset_pin = ub;
+        fprintf(stderr,
+          "%s: stk500_parseextparms(): reset pin = %d\n",
+          progname, PDATA(pgm)->reset_pin);
+      }
+    }
+  }
+  return rv;
+}
+
+
 const char stk500_desc[] = "Atmel STK500 Version 1.x firmware";
 
 void stk500_initpgm(PROGRAMMER * pgm)
@@ -1317,4 +1356,5 @@ void stk500_initpgm(PROGRAMMER * pgm)
   pgm->setup          = stk500_setup;
   pgm->teardown       = stk500_teardown;
   pgm->page_size      = 256;
+  pgm->parseextparams = stk500_parseextparms;
 }
