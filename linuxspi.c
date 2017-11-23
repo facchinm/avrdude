@@ -99,7 +99,7 @@ static void linuxspi_display(PROGRAMMER * pgm, const char * p);
 //universal
 static int linuxspi_initialize(PROGRAMMER* pgm, AVRPART* p);
 // SPI specific functions
-static int linuxspi_cmd(PROGRAMMER * pgm, unsigned char cmd[4], unsigned char res[4]);
+static int linuxspi_cmd(PROGRAMMER * pgm, const unsigned char *cmd, unsigned char *res);
 static int linuxspi_program_enable(PROGRAMMER * pgm, AVRPART * p);
 static int linuxspi_chip_erase(PROGRAMMER * pgm, AVRPART * p);
 
@@ -176,7 +176,7 @@ static int linuxspi_gpio_op_wr(PROGRAMMER* pgm, LINUXSPI_GPIO_OP op, int gpio, c
         return -1;
     }
     
-    if (fprintf(f, val) < 0)
+    if (fprintf(f, "%s", val) < 0)
     {
         fprintf(stderr, "%s: linuxspi_gpio_op_wr(): Unable to write file %s with %s", progname, fn, val);
         free(fn); //we no longer need the path
@@ -302,7 +302,7 @@ static int linuxspi_initialize(PROGRAMMER* pgm, AVRPART* p)
     return 0;
 }
 
-static int linuxspi_cmd(PROGRAMMER* pgm, unsigned char cmd[4], unsigned char res[4])
+static int linuxspi_cmd(PROGRAMMER* pgm,  const unsigned char *cmd, unsigned char *res)
 {
     return linuxspi_spi_duplex(pgm, cmd, res, 4);
 }
