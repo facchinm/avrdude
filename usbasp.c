@@ -54,6 +54,7 @@
 # endif
 #else
 # if defined(HAVE_USB_H)
+#  include <sys/types.h>
 #  include <usb.h>
 # elif defined(HAVE_LUSB0_USB_H)
 #  include <lusb0_usb.h>
