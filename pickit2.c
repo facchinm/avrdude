@@ -61,6 +61,8 @@
 #include <windows.h>
 #if defined(HAVE_DDK_HIDSDI_H)
 #  include <ddk/hidsdi.h>
+#elif defined(HAVE_HIDSDI_H)
+#  include <hidsdi.h>
 #else
 #  include "my_ddk_hidsdi.h"
 #endif
