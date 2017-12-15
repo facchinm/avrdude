@@ -260,7 +260,7 @@ static int linuxgpio_open(PROGRAMMER *pgm, char *port)
   //that unwanted toggling of GPIO0 can occur and that other optional pins
   //mostry LED status, can't be set to GPIO0. It can be fixed when a better 
   //solution exists.
-  for (i=0; i<N_PINS; i++) {
+  for (i=2; i<N_PINS; i++) {
     if ( (pgm->pinno[i] & PIN_MASK) != 0 ||
          i == PIN_AVR_RESET ||
          i == PIN_AVR_SCK   ||
