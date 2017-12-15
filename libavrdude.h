@@ -339,6 +339,10 @@ typedef void (*walk_avrparts_cb)(const char *name, const char *desc,
                                  void *cookie);
 void walk_avrparts(LISTID avrparts, walk_avrparts_cb cb, void *cookie);
 void sort_avrparts(LISTID avrparts);
+
+uint8_t get_fuse_bitmask(AVRMEM * m);
+int compare_memory_masked(AVRMEM * m, unsigned char buf1, unsigned char buf2);
+
 #ifdef __cplusplus
 }
 #endif
