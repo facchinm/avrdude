@@ -237,9 +237,12 @@ SAVED_LIBS="${LIBS}"
 case $target in
         *-*-mingw32* | *-*-cygwin* | *-*-windows*)
 		LIBHID="-lhid -lsetupapi"
-		if test $ac_cv_header_ddk_hidsdi_h = yes
+		if test x$ac_cv_header_ddk_hidsdi_h = xyes
 		then
 			HIDINCLUDE="#include <ddk/hidsdi.h>"
+		elif test x$ac_cv_header_hidsdi_h = xyes
+		then
+			HIDINCLUDE="#include <hidsdi.h>"
 		else
 			HIDINCLUDE="#include \"my_ddk_hidsdi.h\""
 		fi
