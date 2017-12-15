@@ -140,7 +140,6 @@ libavrdude_a_SOURCES = \
 	linuxspi.h \
 	linux_ppdev.h \
 	lists.c \
-	my_ddk_hidsdi.h \
 	par.c \
 	par.h \
 	pgm.c \

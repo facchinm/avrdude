@@ -71,10 +71,13 @@ static int              avrdoperRxPosition = 0; /* amount of bytes already consu
 
 #if defined(HAVE_DDK_HIDSDI_H)
 #  include <ddk/hidsdi.h>
+#  include <ddk/hidpi.h>
+#elif defined (HAVE_HIDSDI_H)
+#  include <hidsdi.h>
+#  include <hidpi.h>
 #else
 #  include "my_ddk_hidsdi.h"
 #endif
-#include <ddk/hidpi.h>
 
 #ifdef USB_DEBUG
 #define DEBUG_PRINT(arg)    printf arg
