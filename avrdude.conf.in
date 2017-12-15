@@ -890,6 +890,24 @@ programmer
 ;
 
 programmer
+  id    = "arduinoisp";
+  desc  = "Arduino ISP Programmer";
+  type  = "usbtiny";
+  connection_type = usb;
+  usbvid     = 0x2341;
+  usbpid     = 0x0049;
+;
+
+programmer
+  id    = "arduinoisporg";
+  desc  = "Arduino ISP Programmer";
+  type  = "usbtiny";
+  connection_type = usb;
+  usbvid     = 0x2A03;
+  usbpid     = 0x0049;
+;
+
+programmer
   id    = "butterfly";
   desc  = "Atmel Butterfly Development Board";
   type  = "butterfly";
