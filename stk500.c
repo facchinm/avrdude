@@ -564,6 +564,12 @@ fprintf(stderr,
     return -1;
   }
 
+  if (pgm->bitclock != 0.0f) {
+    if (pgm->set_sck_period(pgm, pgm->bitclock) < 0) {
+      return -1;
+    }
+  }
+
   if (n_extparms) {
     if ((p->pagel == 0) || (p->bs2 == 0)) {
       avrdude_message(MSG_NOTICE2, "%s: PAGEL and BS2 signals not defined in the configuration "
