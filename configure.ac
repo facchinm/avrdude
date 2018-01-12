@@ -219,6 +219,8 @@ fi
 AC_C_CONST
 AC_HEADER_TIME
 
+AC_CHECK_HEADERS([netinet/in.h])
+
 # WinSock2
 AC_CHECK_LIB([ws2_32], [puts])
 
