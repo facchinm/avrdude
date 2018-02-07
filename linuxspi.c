@@ -103,6 +103,13 @@ static int linuxspi_cmd(PROGRAMMER * pgm, const unsigned char *cmd, unsigned cha
 static int linuxspi_program_enable(PROGRAMMER * pgm, AVRPART * p);
 static int linuxspi_chip_erase(PROGRAMMER * pgm, AVRPART * p);
 
+static long sck_clock_hz = 500000;
+
+static int linuxspi_set_sck_period(PROGRAMMER * pgm, double bitclock)
+{
+    sck_clock_hz = 1.0 / bitclock;
+}
+
 /**
  * @brief Sends/receives a message in full duplex mode
  * @return -1 on failure, otherwise number of bytes sent/recieved
@@ -115,13 +122,17 @@ static int linuxspi_spi_duplex(PROGRAMMER* pgm, unsigned char* tx, unsigned char
         fprintf(stderr, "\n%s: error: Unable to open SPI port %s", progname, pgm->port);
         return -1; //error
     }
-    
+
+    if (pgm->bitclock != 0.0) {
+        linuxspi_set_sck_period(pgm, pgm->bitclock);
+    }
+
     struct spi_ioc_transfer tr = {
         .tx_buf = (unsigned long)tx,
         .rx_buf = (unsigned long)rx,
         .len = len,
         .delay_usecs = 1,
-        .speed_hz = 500000, //should settle around 400Khz, a standard SPI speed
+        .speed_hz = sck_clock_hz, //should settle around 400Khz, a standard SPI speed
         .bits_per_word = 8,
     };
     
