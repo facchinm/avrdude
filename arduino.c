@@ -80,63 +80,6 @@ static int arduino_read_sig_bytes(PROGRAMMER * pgm, AVRPART * p, AVRMEM * m)
   return 3;
 }
 
-#define SPI_CLOCK_DIV4    0x00
-#define SPI_CLOCK_DIV16   0x01
-#define SPI_CLOCK_DIV64   0x02
-#define SPI_CLOCK_DIV128  0x03
-#define SPI_CLOCK_DIV2    0x04
-#define SPI_CLOCK_DIV8    0x05
-#define SPI_CLOCK_DIV32   0x06
-
-static int arduino_set_sck_period(PROGRAMMER * pgm, double bitclock)
-{
-  bitclock = bitclock * 10e5;
-  printf("trying to set bitclock at %f\n", bitclock);
-
-  uint8_t param = SPI_CLOCK_DIV2;
-  if (bitclock < 2.0f) {
-    param = SPI_CLOCK_DIV2;
-  } else if (bitclock < 4.0f) {
-    param = SPI_CLOCK_DIV4;
-  } else if (bitclock < 8.0f) {
-    param = SPI_CLOCK_DIV8;
-  } else if (bitclock < 16.0f) {
-    param = SPI_CLOCK_DIV16;
-  } else if (bitclock < 32.0f) {
-    param = SPI_CLOCK_DIV32;
-  } else if (bitclock < 64.0f) {
-    param = SPI_CLOCK_DIV64;
-  } else {
-    param = SPI_CLOCK_DIV128;
-  }
-  unsigned char buf[32];
-  buf[0] = Parm_STK_SCK_DURATION;
-  buf[1] = param;
-  buf[2] = Sync_CRC_EOP;
-
-  serial_send(&pgm->fd, buf, 3);
-
-  if (serial_recv(&pgm->fd, buf, 2) < 0)
-    return -1;
-  if (buf[0] == Resp_STK_NOSYNC) {
-    avrdude_message(MSG_INFO, "%s: stk500_cmd(): programmer is out of sync\n",
-      progname);
-  return -1;
-  } else if (buf[0] != Resp_STK_INSYNC) {
-    avrdude_message(MSG_INFO, "\n%s: arduino_read_sig_bytes(): (a) protocol error, "
-                    "expect=0x%02x, resp=0x%02x\n",
-                    progname, Resp_STK_INSYNC, buf[0]);
-  return -2;
-  }
-  if (buf[1] != Resp_STK_OK) {
-    avrdude_message(MSG_INFO, "\n%s: arduino_read_sig_bytes(): (a) protocol error, "
-                    "expect=0x%02x, resp=0x%02x\n",
-                    progname, Resp_STK_OK, buf[4]);
-    return -3;
-  }
-  return 0;
-}
-
 static int arduino_open(PROGRAMMER * pgm, char * port)
 {
   union pinfo pinfo;
@@ -186,5 +129,4 @@ void arduino_initpgm(PROGRAMMER * pgm)
   pgm->read_sig_bytes = arduino_read_sig_bytes;
   pgm->open = arduino_open;
   pgm->close = arduino_close;
-  pgm->set_sck_period = arduino_set_sck_period;
 }
