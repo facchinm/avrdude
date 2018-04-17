@@ -50,7 +50,6 @@ struct pdata
   unsigned char ext_addr_byte; /* Record ext-addr byte set in the
 				* target device (if used) */
   unsigned char reset_pin;
-  unsigned char reset_pin_second_board;
 };
 
 #define PDATA(pgm) ((struct pdata *)(pgm->cookie))
@@ -426,7 +425,7 @@ static int stk500_initialize(PROGRAMMER * pgm, AVRPART * p)
   if (strcmp(ldata(lfirst(pgm->id)), "mib510") == 0)
     n_extparms = 0;
   else if ((maj == 1) && (min == 18))
-    n_extparms = 6;   //arduino multi isp
+    n_extparms = 5;   //arduino multi isp
   else if ((maj > 1) || ((maj == 1) && (min > 10)))
     n_extparms = 4;
   else
@@ -593,10 +592,9 @@ fprintf(stderr,
         buf[4] = 1;
     }
 
-    if (n_extparms == 6) {
+    if (n_extparms == 5) {
         fprintf(stderr, "%s: sending extparam for arduino multi isp\n", progname);
         buf[5] = PDATA(pgm)->reset_pin;
-        buf[6] = PDATA(pgm)->reset_pin_second_board;
     }
 
     rc = stk500_set_extended_parms(pgm, n_extparms+1, buf);
@@ -1317,23 +1315,6 @@ static int stk500_parseextparms(PROGRAMMER * pgm, LISTID extparms)
         fprintf(stderr,
           "%s: stk500_parseextparms(): reset pin = %d\n",
           progname, PDATA(pgm)->reset_pin);
-      }
-    }
-
-    if (strncmp(extended_param, "reset_pin_second_board=", strlen("reset_pin_second_board=")) == 0) {
-      unsigned int ub;
-      unsigned int ub2;
-      if (sscanf(extended_param, "reset_pin_second_board=%u", &ub) != 1) {
-        fprintf(stderr,
-                "%s: stk500_parseextparms(): invalid reset pin '%s'\n",
-                progname, extended_param);
-        rv = -1;
-        continue;
-      } else {
-        PDATA(pgm)->reset_pin_second_board = ub;
-        fprintf(stderr,
-          "%s: stk500_parseextparms(): reset pin = %d\n",
-          progname, PDATA(pgm)->reset_pin_second_board);
       }
     }
   }
