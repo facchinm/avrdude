@@ -2015,7 +2015,7 @@ static int jtagmkII_paged_write(PROGRAMMER * pgm, AVRPART * p, AVRMEM * m,
   } else {
     cmd[1] = MTYPE_SPM;
   }
-  serial_recv_timeout = 100;
+  serial_recv_timeout = 200;
   for (; addr < maxaddr; addr += page_size) {
     if ((maxaddr - addr) < page_size)
       block_size = maxaddr - addr;
