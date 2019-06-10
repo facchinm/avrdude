@@ -503,7 +503,7 @@ static int usbtiny_initialize (PROGRAMMER *pgm, AVRPART *p )
   }
 
   for (tries = 0; tries < 4; ++tries) {
-    if (pgm->program_enable(pgm, p) == 0)
+    if (pgm->program_enable(pgm, p) > 0)
       break;
     // no response, RESET and try again
     if (usb_control(pgm, USBTINY_POWERUP,
@@ -730,7 +730,7 @@ static int usbtiny_program_enable(PROGRAMMER *pgm, AVRPART *p)
   unsigned char buf[4];
 
   if (p->flags & AVRPART_HAS_TPI)
-    return avr_tpi_program_enable(pgm, p, TPIPCR_GT_0b);
+    return (avr_tpi_program_enable(pgm, p, TPIPCR_GT_0b) == 0);
   else
     return usbtiny_avr_op(pgm, p, AVR_OP_PGM_ENABLE, buf);
 }
