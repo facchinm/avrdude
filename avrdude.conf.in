@@ -1592,6 +1592,17 @@ programmer
   miso  = ~8;
 ;
 
+# JTAG to UPDI bridge
+
+programmer
+  id    = "jtag2updi";
+  desc  = "JTAGv2 to UPDI bridge";
+  type  = "jtagmkii_pdi";
+  connection_type = serial;
+  baudrate = 115200;
+;
+
+
 #
 # PART DEFINITIONS
 #
@@ -16078,10 +16089,3 @@ part parent    ".avr8x_mega"
     ;
 ;
 
-programmer
-  id    = "jtag2updi";
-  desc  = "JTAGv2 to UPDI bridge";
-  type  = "jtagmkii_pdi";
-  connection_type = serial;
-  baudrate = 115200;
-;
