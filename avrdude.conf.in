@@ -16046,7 +16046,7 @@ part parent    ".avr8x_tiny"
 # ATtiny424
 #------------------------------------------------------------
 
-part parent    ".avr8x_tiny";
+part parent    ".avr8x_tiny"
     id        = "t424";
     desc      = "ATtiny424";
     signature = 0x1E 0x92 0x2C;
@@ -16070,7 +16070,7 @@ part parent    ".avr8x_tiny";
 # ATtiny426
 #------------------------------------------------------------
 
-part parent    ".avr8x_tiny";
+part parent    ".avr8x_tiny"
     id        = "t426";
     desc      = "ATtiny426";
     signature = 0x1E 0x92 0x2B;
@@ -16094,7 +16094,7 @@ part parent    ".avr8x_tiny";
 # ATtiny427
 #------------------------------------------------------------
 
-part parent    ".avr8x_tiny";
+part parent    ".avr8x_tiny"
     id        = "t427";
     desc      = "ATtiny427";
     signature = 0x1E 0x92 0x2A;
@@ -16118,7 +16118,7 @@ part parent    ".avr8x_tiny";
 # ATtiny824
 #------------------------------------------------------------
 
-part parent    ".avr8x_tiny";
+part parent    ".avr8x_tiny"
     id        = "t824";
     desc      = "ATtiny824";
     signature = 0x1E 0x93 0x29;
@@ -16142,7 +16142,7 @@ part parent    ".avr8x_tiny";
 # ATtiny826
 #------------------------------------------------------------
 
-part parent    ".avr8x_tiny";
+part parent    ".avr8x_tiny"
     id        = "t826";
     desc      = "ATtiny826";
     signature = 0x1E 0x93 0x28;
@@ -16166,7 +16166,7 @@ part parent    ".avr8x_tiny";
 # ATtiny827
 #------------------------------------------------------------
 
-part parent    ".avr8x_tiny";
+part parent    ".avr8x_tiny"
     id        = "t827";
     desc      = "ATtiny827";
     signature = 0x1E 0x93 0x27;
@@ -16190,7 +16190,7 @@ part parent    ".avr8x_tiny";
 # ATtiny1624
 #------------------------------------------------------------
 
-part parent    ".avr8x_tiny";
+part parent    ".avr8x_tiny"
     id        = "t1624";
     desc      = "ATtiny1624";
     signature = 0x1E 0x94 0x2A;
@@ -16213,7 +16213,7 @@ part parent    ".avr8x_tiny";
 # ATtiny1626
 #------------------------------------------------------------
 
-part parent    ".avr8x_tiny";
+part parent    ".avr8x_tiny"
     id        = "t1626";
     desc      = "ATtiny1626";
     signature = 0x1E 0x94 0x29;
@@ -16237,7 +16237,7 @@ part parent    ".avr8x_tiny";
 # ATtiny1627
 #------------------------------------------------------------
 
-part parent    ".avr8x_tiny";
+part parent    ".avr8x_tiny"
     id        = "t1627";
     desc      = "ATtiny1627";
     signature = 0x1E 0x94 0x28;
@@ -16546,7 +16546,7 @@ part
 # AVR32DA28
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr32da28";
     desc      = "AVR32DA28";
     signature = 0x1E 0x95 0x34;
@@ -16570,7 +16570,7 @@ part parent    ".avrdx";
 # AVR32DA32
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr32da32";
     desc      = "AVR32DA32";
     signature = 0x1E 0x95 0x33;
@@ -16594,7 +16594,7 @@ part parent    ".avrdx";
 # AVR32DA48
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr32da48";
     desc      = "AVR32DA48";
     signature = 0x1E 0x95 0x32;
@@ -16618,7 +16618,7 @@ part parent    ".avrdx";
 # AVR64DA28
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr64da28";
     desc      = "AVR64DA28";
     signature = 0x1E 0x96 0x15;
@@ -16642,7 +16642,7 @@ part parent    ".avrdx";
 # AVR64DA32
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr64da32";
     desc      = "AVR64DA32";
     signature = 0x1E 0x96 0x14;
@@ -16666,7 +16666,7 @@ part parent    ".avrdx";
 # AVR64DA48
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr64da48";
     desc      = "AVR64DA48";
     signature = 0x1E 0x96 0x13;
@@ -16690,7 +16690,7 @@ part parent    ".avrdx";
 # AVR64DA64
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr64da64";
     desc      = "AVR64DA64";
     signature = 0x1E 0x96 0x12;
@@ -16714,7 +16714,7 @@ part parent    ".avrdx";
 # AVR128DA28
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr128da28";
     desc      = "AVR128DA28";
     signature = 0x1E 0x97 0x0A;
@@ -16738,7 +16738,7 @@ part parent    ".avrdx";
 # AVR128DA32
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr128da32";
     desc      = "AVR128DA32";
     signature = 0x1E 0x97 0x09;
@@ -16762,7 +16762,7 @@ part parent    ".avrdx";
 # AVR128DA48
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr128da48";
     desc      = "AVR128DA48";
     signature = 0x1E 0x97 0x08;
@@ -16786,7 +16786,7 @@ part parent    ".avrdx";
 # AVR128DA64
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr128da64";
     desc      = "AVR128DA64";
     signature = 0x1E 0x97 0x07;
@@ -16810,7 +16810,7 @@ part parent    ".avrdx";
 # AVR32DB28
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr32db28";
     desc      = "AVR32DB28";
     signature = 0x1E 0x95 0x37;
@@ -16834,7 +16834,7 @@ part parent    ".avrdx";
 # AVR32DB32
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr32db32";
     desc      = "AVR32DB32";
     signature = 0x1E 0x95 0x36;
@@ -16858,7 +16858,7 @@ part parent    ".avrdx";
 # AVR32DB48
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr32db48";
     desc      = "AVR32DB48";
     signature = 0x1E 0x95 0x35;
@@ -16882,7 +16882,7 @@ part parent    ".avrdx";
 # AVR64DB28
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr64db28";
     desc      = "AVR64DB28";
     signature = 0x1E 0x96 0x19;
@@ -16906,7 +16906,7 @@ part parent    ".avrdx";
 # AVR64DB32
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr64db32";
     desc      = "AVR64DB32";
     signature = 0x1E 0x96 0x18;
@@ -16930,7 +16930,7 @@ part parent    ".avrdx";
 # AVR64DB48
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr64db48";
     desc      = "AVR64DB48";
     signature = 0x1E 0x96 0x17;
@@ -16954,7 +16954,7 @@ part parent    ".avrdx";
 # AVR64DB64
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr64db64";
     desc      = "AVR64DB64";
     signature = 0x1E 0x96 0x16;
@@ -16978,7 +16978,7 @@ part parent    ".avrdx";
 # AVR128DB28
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr128db28";
     desc      = "AVR128DB28";
     signature = 0x1E 0x97 0x0E;
@@ -17002,7 +17002,7 @@ part parent    ".avrdx";
 # AVR128DB32
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr128db32";
     desc      = "AVR128DB32";
     signature = 0x1E 0x97 0x0D;
@@ -17026,7 +17026,7 @@ part parent    ".avrdx";
 # AVR128DB48
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr128db48";
     desc      = "AVR128DB48";
     signature = 0x1E 0x97 0x0C;
@@ -17050,7 +17050,7 @@ part parent    ".avrdx";
 # AVR128DB64
 #------------------------------------------------------------
 
-part parent    ".avrdx";
+part parent    ".avrdx"
     id        = "avr128db64";
     desc      = "AVR128DB64";
     signature = 0x1E 0x97 0x0B;
