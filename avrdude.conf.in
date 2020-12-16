@@ -36,7 +36,7 @@
 #       vfyled   = <num> ;                          # pin number
 #       usbvid   = <hexnum>;                        # USB VID (Vendor ID)
 #       usbpid   = <hexnum> [, <hexnum> ...]        # USB PID (Product ID) (1)
-#       usbdev   = <interface>;                     # USB interface or other device info 
+#       usbdev   = <interface>;                     # USB interface or other device info
 #       usbvendor = <vendorname>;                   # USB Vendor Name
 #       usbproduct = <productname>;                 # USB Product Name
 #       usbsn    = <serialno>;                      # USB Serial Number
@@ -148,9 +148,9 @@
 # complain.
 #
 # Parts can also inherit parameters from previously defined parts
-# using the following syntax. In this case specified integer and 
-# string values override parameter values from the parent part. New 
-# memory definitions are added to the definitions inherited from the 
+# using the following syntax. In this case specified integer and
+# string values override parameter values from the parent part. New
+# memory definitions are added to the definitions inherited from the
 # parent.
 #
 #   part parent <id>                              # quoted string
@@ -159,7 +159,7 @@
 #     ;
 #
 # NOTES:
-#   * 'devicecode' is the device code used by the STK500 (see codes 
+#   * 'devicecode' is the device code used by the STK500 (see codes
 #       listed below)
 #   * Not all memory types will implement all instructions.
 #   * AVR Fuse bits and Lock bits are implemented as a type of memory.
@@ -373,7 +373,7 @@ programmer
 # http://dangerousprototypes.com/docs/FT2232_breakout_board
 # http://www.ftdichip.com/Products/Modules/DLPModules.htm,DLP-2232*,DLP-USB1232H
 # http://flashrom.org/FT2232SPI_Programmer
-# 
+#
 # The drivers will look for a specific device and use the first one found.
 # If you have mulitple devices, then look for unique information (like SN)
 # And fill that in here.
@@ -415,7 +415,7 @@ programmer
   type       = "avrftdi";
   connection_type = usb;
   usbvid     = 0x0403;
-# Note: This PID is reserved for generic H devices and 
+# Note: This PID is reserved for generic H devices and
 # should be programmed into the EEPROM
 #  usbpid     = 0x8A48;
   usbpid     = 0x6010;
@@ -423,13 +423,13 @@ programmer
   usbvendor  = "";
   usbproduct = "";
   usbsn      = "";
-#ISP-signals 
+#ISP-signals
   reset  = 3;
   sck    = 0;
   mosi   = 1;
   miso   = 2;
   buff   = ~4;
-#LED SIGNALs 
+#LED SIGNALs
   errled = ~ 11;
   rdyled = ~ 14;
   pgmled = ~ 13;
@@ -527,8 +527,8 @@ programmer
 
 
 # On the adapter you can read "O-Link". On the PCB is printed "OpenJTAG v3.1"
-# You can find it as "OpenJTAG ARM JTAG USB" in the internet. 
-# (But there are also several projects called Open JTAG, eg. 
+# You can find it as "OpenJTAG ARM JTAG USB" in the internet.
+# (But there are also several projects called Open JTAG, eg.
 # http://www.openjtag.org, which are completely different.)
 #   http://www.100ask.net/shop/english.html (website seems to be outdated)
 #   http://item.taobao.com/item.htm?id=1559277013
@@ -806,7 +806,7 @@ programmer
 # TTL-232R TXD 4 Orange -> ICPS RESET (pin 5)
 # TTL-232R RXD 5 Yellow -> ICPS SCK   (pin 3)
 # TTL-232R RTS 6 Green  -> ICPS MISO  (pin 1)
-# Except for VCC and GND, you can connect arbitual pairs as long as 
+# Except for VCC and GND, you can connect arbitual pairs as long as
 # the following table is adjusted.
 programmer
   id    = "ttl232r";
@@ -927,7 +927,7 @@ programmer
   type  = "butterfly";
   connection_type = serial;
 ;
- 
+
 # suggested in http://forum.mikrokopter.de/topic-post48317.html
 programmer
   id    = "mkbutterfly";
@@ -1240,6 +1240,30 @@ programmer
 ;
 
 programmer
+  id    = "pickit4_updi";
+  desc  = "MPLAB(R) PICkit 4 in UPDI mode";
+  type  = "jtagice3_updi";
+  connection_type = usb;
+  usbpid = 0x2177, 0x2178, 0x2179;
+;
+
+programmer
+  id    = "snap_updi";
+  desc  = "MPLAB(R) SNAP in UPDI mode";
+  type  = "jtagice3_updi";
+  connection_type = usb;
+  usbpid = 0x217F, 0x2180, 0x2181;
+;
+
+programmer
+  id    = "pkobn_updi";
+  desc  = "PKOB nano (nEDBG) in UPDI mode";
+  type  = "jtagice3_updi";
+  connection_type = usb;
+  usbpid = 0x2175;
+;
+
+programmer
   id    = "pavr";
   desc  = "Jason Kyle's pAVR Serial Programmer";
   type  = "avr910";
@@ -1302,7 +1326,7 @@ programmer
 programmer parent "stk200"
   id    = "pony-stk200";
   desc  = "Pony Prog STK200";
-  pgmled = 8; 
+  pgmled = 8;
 ;
 
 programmer
@@ -1387,7 +1411,7 @@ programmer
 # From the contributor of the "xil" jtag cable:
 # The "vcc" definition isn't really vcc (the cable gets its power from
 # the programming circuit) but is necessary to switch one of the
-# buffer lines (trying to add it to the "buff" lines doesn't work in 
+# buffer lines (trying to add it to the "buff" lines doesn't work in
 # avrdude versions before 5.5j).
 # With this, TMS connects to RESET, TDI to MOSI, TDO to MISO and TCK
 # to SCK (plus vcc/gnd of course)
@@ -1510,7 +1534,7 @@ programmer
   reset = 25;
 ;
 
-# some ultra cheap programmers use bitbanging on the 
+# some ultra cheap programmers use bitbanging on the
 # serialport.
 #
 # PC - DB9 - Pins for RS232:
@@ -1591,6 +1615,17 @@ programmer
   mosi  = ~3;
   miso  = ~8;
 ;
+
+# JTAG to UPDI bridge
+
+programmer
+  id    = "jtag2updi";
+  desc  = "JTAGv2 to UPDI bridge";
+  type  = "jtagmkii_pdi";
+  connection_type = serial;
+  baudrate = 115200;
+;
+
 
 #
 # PART DEFINITIONS
@@ -2160,7 +2195,7 @@ part
         max_write_delay = 9000;
         readback_p1     = 0x00;
         readback_p2     = 0xff;
-        read            = "1 0  1  0   0  0  0  0   x x x x  x x x x", 
+        read            = "1 0  1  0   0  0  0  0   x x x x  x x x x",
                           "x x a5 a4  a3 a2 a1 a0   o o o o  o o o o";
 
         write           = "1 1  0  0   0  0  0  0   x x x x  x x x x",
@@ -2273,7 +2308,7 @@ part
         max_write_delay = 20000;
         readback_p1     = 0x80;
         readback_p2     = 0x7f;
-        read            = " 1  0  1  0   0  0  0  0  x x x x  x x x a8", 
+        read            = " 1  0  1  0   0  0  0  0  x x x x  x x x a8",
                           "a7 a6 a5 a4 a3 a2 a1 a0   o o o o  o o o o";
 
         write           = " 1  1  0  0   0  0  0  0   x x x x  x x x a8",
@@ -2386,7 +2421,7 @@ part
         max_write_delay = 9000;
         readback_p1     = 0x80;
         readback_p2     = 0x7f;
-        read            = "1  0  1  0   0  0  0  0   x x x x  x x x x", 
+        read            = "1  0  1  0   0  0  0  0   x x x x  x x x x",
                           "x a6 a5 a4  a3 a2 a1 a0   o o o o  o o o o";
 
         write           = "1  1  0  0   0  0  0  0   x x x x  x x x x",
@@ -2500,7 +2535,7 @@ part
         max_write_delay = 20000;
         readback_p1     = 0x00;
         readback_p2     = 0xff;
-        read            = "1  0  1  0   0  0  0  0   x x x x  x x x x", 
+        read            = "1  0  1  0   0  0  0  0   x x x x  x x x x",
                           "x a6 a5 a4  a3 a2 a1 a0   o o o o  o o o o";
 
         write           = "1  1  0  0   0  0  0  0   x x x x  x x x x",
@@ -2627,7 +2662,7 @@ part
         max_write_delay = 20000;
         readback_p1     = 0x00;
         readback_p2     = 0xff;
-        read            = "1  0  1  0   0  0  0  0   0 0 0 0  0 0 0 0", 
+        read            = "1  0  1  0   0  0  0  0   0 0 0 0  0 0 0 0",
                           "x a6 a5 a4  a3 a2 a1 a0   o o o o  o o o o";
 
         write           = "1  1  0  0   0  0  0  0   0 0 0 0  0 0 0 0",
@@ -2751,7 +2786,7 @@ part
         max_write_delay = 20000;
         readback_p1     = 0x00;
         readback_p2     = 0xff;
-        read            = " 1  0  1  0   0  0  0  0   x x x x  x x x x", 
+        read            = " 1  0  1  0   0  0  0  0   x x x x  x x x x",
                           "a7 a6 a5 a4  a3 a2 a1 a0   o o o o  o o o o";
 
         write           = " 1  1  0  0   0  0  0  0   x x x x  x x x x",
@@ -2845,7 +2880,7 @@ part
         max_write_delay = 20000;
         readback_p1     = 0x00;
         readback_p2     = 0xff;
-        read            = " 1  0  1  0   0  0  0  0   x x x x  x x x x", 
+        read            = " 1  0  1  0   0  0  0  0   x x x x  x x x x",
                           "a7 a6 a5 a4  a3 a2 a1 a0   o o o o  o o o o";
 
         write           = " 1  1  0  0   0  0  0  0   x x x x  x x x x",
@@ -2959,7 +2994,7 @@ part
         max_write_delay = 9000;
         readback_p1     = 0x80;
         readback_p2     = 0x7f;
-        read            = " 1  0  1  0   0  0  0  0  x x x x  x x x a8", 
+        read            = " 1  0  1  0   0  0  0  0  x x x x  x x x a8",
                           "a7 a6 a5 a4 a3 a2 a1 a0   o o o o  o o o o";
 
         write           = " 1  1  0  0   0  0  0  0   x x x x  x x x a8",
@@ -3072,7 +3107,7 @@ part
         max_write_delay = 20000;
         readback_p1     = 0x00;
         readback_p2     = 0xff;
-        read            = " 1  0  1  0   0  0  0  0   x x x x  x x x a8", 
+        read            = " 1  0  1  0   0  0  0  0   x x x x  x x x a8",
                           "a7 a6 a5 a4  a3 a2 a1 a0   o o o o  o o o o";
 
         write           = " 1  1  0  0   0  0  0  0   x x x x  x x x a8",
@@ -3200,7 +3235,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	mode		= 0x04;
@@ -3352,7 +3387,7 @@ part
 
         write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	mode		= 0x04;
@@ -3536,7 +3571,7 @@ part
 
         write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	mode		= 0x04;
@@ -3717,7 +3752,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  0   0   0   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -4292,7 +4327,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  0   0   x   x      x   x  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -4494,7 +4529,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  0   0   x   x      x a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -4627,6 +4662,20 @@ part parent "m324p"
     ocdrev              = 3;
   ;
 
+#------------------------------------------------------------
+# ATmega324PB
+#------------------------------------------------------------
+
+# similar to ATmega324P
+part parent "m324p"
+    id               = "m324pb";
+    desc             = "ATmega324PB";
+    signature        = 0x1e 0x95 0x17;
+
+    ocdrev              = 3;
+  ;
+
+
 
 #------------------------------------------------------------
 # ATmega644
@@ -4702,7 +4751,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  0   0   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -4910,7 +4959,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  0   0   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -5104,7 +5153,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  0   0   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -5288,7 +5337,7 @@ part
        mode        = 0x41;
     delay       = 10;
     blocksize   = 128;
-    readsize    = 256;  
+    readsize    = 256;
 
         ;
 
@@ -5648,7 +5697,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x      x   x   x  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -6569,7 +6618,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  0   0   x   x      x   x   x  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	mode		= 0x04;
@@ -7850,7 +7899,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  0   0   0   x      x   x   x   x",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -8062,7 +8111,7 @@ part
 
 	write           = "  1   1   0   0      0   0   0   0",
                           "  0   0   0   x      x   x   x  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -8271,7 +8320,7 @@ part
                           " 0 0 0 x x x x a8",
                           " a7 a6 a5 a4 a3 a2 a1 a0",
                           " o o o o o o o o";
-    
+
         write           = " 1 1 0 0 0 0 0 0",
                           " 0 0 0 x x x x a8",
                           " a7 a6 a5 a4 a3 a2 a1 a0",
@@ -8306,22 +8355,22 @@ part
                           " 0 0 0 a12 a11 a10 a9 a8",
                           " a7 a6 a5 a4 a3 a2 a1 a0",
                           " o o o o o o o o";
-        
+
         read_hi          = " 0 0 1 0 1 0 0 0",
                            " 0 0 0 a12 a11 a10 a9 a8",
                            " a7 a6 a5 a4 a3 a2 a1 a0",
                            " o o o o o o o o";
-        
+
         loadpage_lo     = " 0 1 0 0 0 0 0 0",
                           " 0 0 0 x x x x x",
                           " x x a5 a4 a3 a2 a1 a0",
                           " i i i i i i i i";
-        
+
         loadpage_hi     = " 0 1 0 0 1 0 0 0",
                           " 0 0 0 x x x x x",
                           " x x a5 a4 a3 a2 a1 a0",
                           " i i i i i i i i";
-        
+
         writepage       = " 0 1 0 0 1 1 0 0",
                           " 0 0 0 a12 a11 a10 a9 a8",
                           " a7 a6 x x x x x x",
@@ -8333,57 +8382,57 @@ part
         readsize    = 256;
 
         ;
-        
+
     memory "lfuse"
         size            = 1;
         min_write_delay = 4500;
         max_write_delay = 4500;
         read            = "0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0",
                           "x x x x x x x x o o o o o o o o";
-        
+
         write           = "1 0 1 0 1 1 0 0 1 0 1 0 0 0 0 0",
                           "x x x x x x x x i i i i i i i i";
         ;
-    
+
     memory "hfuse"
         size            = 1;
         min_write_delay = 4500;
         max_write_delay = 4500;
         read            = "0 1 0 1 1 0 0 0 0 0 0 0 1 0 0 0",
                           "x x x x x x x x o o o o o o o o";
-        
+
         write           = "1 0 1 0 1 1 0 0 1 0 1 0 1 0 0 0",
                           "x x x x x x x x i i i i i i i i";
         ;
-    
+
     memory "efuse"
         size            = 1;
         min_write_delay = 4500;
         max_write_delay = 4500;
         read            = "0 1 0 1 0 0 0 0 0 0 0 0 1 0 0 0",
                           "x x x x x x x x o o o o o o o o";
-        
+
         write           = "1 0 1 0 1 1 0 0 1 0 1 0 0 1 0 0",
                           "x x x x x x x x x x x x x i i i";
         ;
-    
+
     memory "lock"
         size            = 1;
         min_write_delay = 4500;
         max_write_delay = 4500;
         read            = "0 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0",
                           "x x x x x x x x x x o o o o o o";
-        
+
         write           = "1 0 1 0 1 1 0 0 1 1 1 x x x x x",
                           "x x x x x x x x 1 1 i i i i i i";
         ;
-    
+
     memory "calibration"
         size            = 1;
         read            = "0 0 1 1 1 0 0 0 0 0 0 x x x x x",
                           "0 0 0 0 0 0 0 0 o o o o o o o o";
         ;
-    
+
     memory "signature"
         size            = 3;
         read            = "0 0 1 1 0 0 0 0 0 0 0 x x x x x",
@@ -8847,7 +8896,7 @@ part parent "m328"
         max_write_delay = 4500;
         read            = "0 1 0 1 0 0 0 0 0 0 0 0 1 0 0 0",
                           "x x x x x x x x o o o o o o o o";
-        
+
         write           = "1 0 1 0 1 1 0 0 1 0 1 0 0 1 0 0",
                           "x x x x x x x x x x i i i i i i";
     ;
@@ -9507,7 +9556,7 @@ part parent "pwm3b"
 part parent "pwm316"
      id = "pwm216";
      desc = "AT90PWM216";
-  ; 
+  ;
 
 #------------------------------------------------------------
 # ATtiny25
@@ -10135,7 +10184,7 @@ part
 
         write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -10325,7 +10374,7 @@ part
 
         write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -10528,7 +10577,7 @@ part
 
         write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -11826,7 +11875,7 @@ part
 
         write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x      x a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -12017,7 +12066,7 @@ part
 
         write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x      x a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -12221,7 +12270,7 @@ part
 
         write           = "  1   1   0   0      0   0   0   0",
                           "  x   x   x   x    a11 a10  a9  a8",
-                          " a7  a6  a5  a4     a3  a2  a1  a0", 
+                          " a7  a6  a5  a4     a3  a2  a1  a0",
                           "  i   i   i   i      i   i   i   i";
 
 	loadpage_lo	= "  1   1   0   0      0   0   0   1",
@@ -15255,6 +15304,7 @@ part
     memory "signature"
         size		= 3;
         offset		= 0x1100;
+        readsize	= 0x3;
     ;
 
     memory "prodsig"
@@ -15267,51 +15317,62 @@ part
     memory "fuses"
         size		= 9;
         offset		= 0x1280;
+        page_size = 0x0A;
+        readsize  = 0x0A;
     ;
 
     memory "fuse0"
         size		= 1;
         offset		= 0x1280;
+        readsize  = 1;
     ;
 
     memory "fuse1"
         size		= 1;
         offset		= 0x1281;
+        readsize  = 1;
     ;
 
     memory "fuse2"
         size		= 1;
         offset		= 0x1282;
+        readsize  = 1;
     ;
 
     memory "fuse4"
         size		= 1;
         offset		= 0x1284;
+        readsize  = 1;
     ;
 
     memory "fuse5"
         size		= 1;
         offset		= 0x1285;
+        readsize  = 1;
     ;
 
     memory "fuse6"
         size		= 1;
         offset		= 0x1286;
+        readsize  = 1;
     ;
 
     memory "fuse7"
         size		= 1;
         offset		= 0x1287;
+        readsize  = 1;
     ;
 
     memory "fuse8"
         size		= 1;
         offset		= 0x1288;
+        readsize  = 1;
     ;
 
     memory "lock"
         size		= 1;
         offset		= 0x128a;
+        readsize  = 1;
     ;
 
     memory "data"
@@ -15409,7 +15470,7 @@ part parent    ".avr8x_tiny"
 part parent    ".avr8x_tiny"
     id        = "t402";
     desc      = "ATtiny402";
-    signature = 0x1E 0x92 0x23;
+    signature = 0x1E 0x92 0x27;
 
     memory "flash"
         size      = 0x1000;
@@ -15911,30 +15972,6 @@ part parent    ".avr8x_tiny"
 ;
 
 #------------------------------------------------------------
-# ATtiny3214
-#------------------------------------------------------------
-
-part parent    ".avr8x_tiny"
-    id        = "t3214";
-    desc      = "ATtiny3214";
-    signature = 0x1E 0x95 0x20;
-
-    memory "flash"
-        size      = 0x8000;
-        offset    = 0x8000;
-        page_size = 0x80;
-        readsize  = 0x100;
-    ;
-
-    memory "eeprom"
-        size      = 0x100;
-        offset    = 0x1400;
-        page_size = 0x40;
-        readsize  = 0x100;
-    ;
-;
-
-#------------------------------------------------------------
 # ATtiny3216
 #------------------------------------------------------------
 
@@ -15983,13 +16020,324 @@ part parent    ".avr8x_tiny"
 ;
 
 #------------------------------------------------------------
+# ATtiny424
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "t424";
+    desc      = "ATtiny424";
+    signature = 0x1E 0x92 0x2C;
+
+    memory "flash"
+        size      = 0x1000;
+        offset    = 0x8000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x80;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATtiny426
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "t426";
+    desc      = "ATtiny426";
+    signature = 0x1E 0x92 0x2B;
+
+    memory "flash"
+        size      = 0x1000;
+        offset    = 0x8000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x80;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATtiny427
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "t427";
+    desc      = "ATtiny427";
+    signature = 0x1E 0x92 0x2A;
+
+    memory "flash"
+        size      = 0x1000;
+        offset    = 0x8000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x80;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATtiny824
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "t824";
+    desc      = "ATtiny824";
+    signature = 0x1E 0x93 0x29;
+
+    memory "flash"
+        size      = 0x2000;
+        offset    = 0x8000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x80;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATtiny826
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "t826";
+    desc      = "ATtiny826";
+    signature = 0x1E 0x93 0x28;
+
+    memory "flash"
+        size      = 0x2000;
+        offset    = 0x8000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x80;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATtiny827
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "t827";
+    desc      = "ATtiny827";
+    signature = 0x1E 0x93 0x27;
+
+    memory "flash"
+        size      = 0x2000;
+        offset    = 0x8000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x80;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATtiny1624
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "t1624";
+    desc      = "ATtiny1624";
+    signature = 0x1E 0x94 0x2A;
+
+    memory "flash"
+        size      = 0x4000;
+        offset    = 0x8000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x100;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+#------------------------------------------------------------
+# ATtiny1626
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "t1626";
+    desc      = "ATtiny1626";
+    signature = 0x1E 0x94 0x29;
+
+    memory "flash"
+        size      = 0x4000;
+        offset    = 0x8000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x100;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATtiny1627
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "t1627";
+    desc      = "ATtiny1627";
+    signature = 0x1E 0x94 0x28;
+
+    memory "flash"
+        size      = 0x4000;
+        offset    = 0x8000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x100;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATmega808
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "m808";
+    desc      = "ATmega808";
+    signature = 0x1E 0x93 0x26;
+
+    memory "flash"
+        size      = 0x2000;
+        offset    = 0x4000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x100;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATmega809
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "m809";
+    desc      = "ATmega809";
+    signature = 0x1E 0x93 0x2A;
+
+    memory "flash"
+        size      = 0x2000;
+        offset    = 0x4000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x100;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATmega1608
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "m1608";
+    desc      = "ATmega1608";
+    signature = 0x1E 0x94 0x27;
+
+    memory "flash"
+        size      = 0x4000;
+        offset    = 0x4000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x100;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# ATmega1609
+#------------------------------------------------------------
+
+part parent    ".avr8x_tiny"
+    id        = "m1609";
+    desc      = "ATmega1609";
+    signature = 0x1E 0x94 0x26;
+
+    memory "flash"
+        size      = 0x4000;
+        offset    = 0x4000;
+        page_size = 0x40;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x100;
+        offset    = 0x1400;
+        page_size = 0x20;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
 # ATmega3208
 #------------------------------------------------------------
 
 part parent    ".avr8x_mega"
     id        = "m3208";
     desc      = "ATmega3208";
-    signature = 0x1E 0x95 0x52;
+    signature = 0x1E 0x95 0x30;
 
     memory "flash"
         size      = 0x8000;
@@ -16013,7 +16361,7 @@ part parent    ".avr8x_mega"
 part parent    ".avr8x_mega"
     id        = "m3209";
     desc      = "ATmega3209";
-    signature = 0x1E 0x95 0x53;
+    signature = 0x1E 0x95 0x31;
 
     memory "flash"
         size      = 0x8000;
@@ -16078,10 +16426,623 @@ part parent    ".avr8x_mega"
     ;
 ;
 
-programmer
-  id    = "jtag2updi";
-  desc  = "JTAGv2 to UPDI bridge";
-  type  = "jtagmkii_pdi";
-  connection_type = serial;
-  baudrate = 115200;
+
+#------------------------------------------------------------
+# AVR-Dx family common values
+#------------------------------------------------------------
+
+part
+    id		= ".avrdx";
+    desc	= "AVR-Dx family common values";
+    has_updi	= yes;
+    nvm_base	= 0x1000;
+    ocd_base	= 0x0F80;
+
+    memory "signature"
+        size		= 3;
+        offset		= 0x1100;
+        readsize	= 0x3;
+    ;
+
+    memory "prodsig"
+        size		= 0x7D;
+        offset		= 0x1103;
+        page_size	= 0x7D;
+        readsize	= 0x7D;
+    ;
+
+    memory "fuses"
+        size		= 9;
+        offset		= 0x1050;
+        page_size = 0x10;
+        readsize  = 0x10;
+    ;
+
+    memory "fuse0"
+        size		= 1;
+        offset		= 0x1050;
+        readsize  = 1;
+    ;
+
+    memory "fuse1"
+        size		= 1;
+        offset		= 0x1051;
+        readsize  = 1;
+    ;
+
+    memory "fuse2"
+        size		= 1;
+        offset		= 0x1052;
+        readsize  = 1;
+    ;
+
+    memory "fuse4"
+        size		= 1;
+        offset		= 0x1054;
+        readsize  = 1;
+    ;
+
+    memory "fuse5"
+        size		= 1;
+        offset		= 0x1055;
+        readsize  = 1;
+    ;
+
+    memory "fuse6"
+        size		= 1;
+        offset		= 0x1056;
+        readsize  = 1;
+    ;
+
+    memory "fuse7"
+        size		= 1;
+        offset		= 0x1057;
+        readsize  = 1;
+    ;
+
+    memory "fuse8"
+        size		= 1;
+        offset		= 0x1058;
+        readsize  = 1;
+    ;
+
+    memory "lock"
+        size		= 4;
+        offset		= 0x1040;
+        page_size = 0x1;
+        readsize  = 0x4;
+    ;
+
+    memory "data"
+        # SRAM, only used to supply the offset
+        offset		= 0x1000000;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR32DA28
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr32da28";
+    desc      = "AVR32DA28";
+    signature = 0x1E 0x95 0x34;
+
+    memory "flash"
+        size      = 0x8000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR32DA32
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr32da32";
+    desc      = "AVR32DA32";
+    signature = 0x1E 0x95 0x33;
+
+    memory "flash"
+        size      = 0x8000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR32DA48
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr32da48";
+    desc      = "AVR32DA48";
+    signature = 0x1E 0x95 0x32;
+
+    memory "flash"
+        size      = 0x8000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64DA28
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr64da28";
+    desc      = "AVR64DA28";
+    signature = 0x1E 0x96 0x15;
+
+    memory "flash"
+        size      = 0x10000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64DA32
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr64da32";
+    desc      = "AVR64DA32";
+    signature = 0x1E 0x96 0x14;
+
+    memory "flash"
+        size      = 0x10000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64DA48
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr64da48";
+    desc      = "AVR64DA48";
+    signature = 0x1E 0x96 0x13;
+
+    memory "flash"
+        size      = 0x10000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64DA64
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr64da64";
+    desc      = "AVR64DA64";
+    signature = 0x1E 0x96 0x12;
+
+    memory "flash"
+        size      = 0x10000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR128DA28
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr128da28";
+    desc      = "AVR128DA28";
+    signature = 0x1E 0x97 0x0A;
+
+    memory "flash"
+        size      = 0x20000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR128DA32
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr128da32";
+    desc      = "AVR128DA32";
+    signature = 0x1E 0x97 0x09;
+
+    memory "flash"
+        size      = 0x20000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR128DA48
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr128da48";
+    desc      = "AVR128DA48";
+    signature = 0x1E 0x97 0x08;
+
+    memory "flash"
+        size      = 0x20000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR128DA64
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr128da64";
+    desc      = "AVR128DA64";
+    signature = 0x1E 0x97 0x07;
+
+    memory "flash"
+        size      = 0x20000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR32DB28
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr32db28";
+    desc      = "AVR32DB28";
+    signature = 0x1E 0x95 0x37;
+
+    memory "flash"
+        size      = 0x8000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR32DB32
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr32db32";
+    desc      = "AVR32DB32";
+    signature = 0x1E 0x95 0x36;
+
+    memory "flash"
+        size      = 0x8000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR32DB48
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr32db48";
+    desc      = "AVR32DB48";
+    signature = 0x1E 0x95 0x35;
+
+    memory "flash"
+        size      = 0x8000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64DB28
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr64db28";
+    desc      = "AVR64DB28";
+    signature = 0x1E 0x96 0x19;
+
+    memory "flash"
+        size      = 0x10000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64DB32
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr64db32";
+    desc      = "AVR64DB32";
+    signature = 0x1E 0x96 0x18;
+
+    memory "flash"
+        size      = 0x10000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64DB48
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr64db48";
+    desc      = "AVR64DB48";
+    signature = 0x1E 0x96 0x17;
+
+    memory "flash"
+        size      = 0x10000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64DB64
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr64db64";
+    desc      = "AVR64DB64";
+    signature = 0x1E 0x96 0x16;
+
+    memory "flash"
+        size      = 0x10000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR128DB28
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr128db28";
+    desc      = "AVR128DB28";
+    signature = 0x1E 0x97 0x0E;
+
+    memory "flash"
+        size      = 0x20000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR128DB32
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr128db32";
+    desc      = "AVR128DB32";
+    signature = 0x1E 0x97 0x0D;
+
+    memory "flash"
+        size      = 0x20000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR128DB48
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr128db48";
+    desc      = "AVR128DB48";
+    signature = 0x1E 0x97 0x0C;
+
+    memory "flash"
+        size      = 0x20000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR128DB64
+#------------------------------------------------------------
+
+part parent    ".avrdx"
+    id        = "avr128db64";
+    desc      = "AVR128DB64";
+    signature = 0x1E 0x97 0x0B;
+
+    memory "flash"
+        size      = 0x20000;
+        offset    = 0x800000;
+        page_size = 0x200;
+        readsize  = 0x100;
+    ;
+
+    memory "eeprom"
+        size      = 0x200;
+        offset    = 0x1400;
+        page_size = 0x1;
+        readsize  = 0x100;
+    ;
 ;

@@ -44,3 +44,66 @@ Usually, the packages with the header files (and static libraries) are
 derived from the regular package name by appending "-devel".  Thus,
 make sure you have "libusb-devel" and "libelf-devel" installed before
 running the configure script.  (Same goes for libftdi.)
+
+.
+
+Linux Installation
+==================
+
+This was tested on Ubuntu 20.04
+
+## formal installation
+```
+git clone https://github.com/facchinm/avrdude.git
+cd avrdude/
+sudo apt install automake libtool bison flex make
+sudo apt install libftdi1-dev libusb-dev libftdi-dev libelf-dev libhidapi-dev
+./bootstrap 
+./configure 
+make
+sudo make install
+```
+
+
+## usb config
+#### Add udev rule
+```
+sudo nano /etc/udev/rules.d/30-avrprog.rules
+```
+fill the file with `SUBSYSTEM=="usb", SYMLINK+="atmel_ice", MODE="660", GROUP="dialout"`
+#### reload udev rules
+```
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+#### test rules (only for troubleshooting)
+Unplug and replug the programmer
+```
+find /dev/bus/usb/ ! -type d -mmin -2
+udevadm info /dev/bus/usb/002/024
+sudo udevadm test  /devices/pci0000:00/0000:00:14.0/usb2/2-2
+```
+(udevadm info : replace by the previous result)
+(udevadm test : replace by #DEVPATH of info value)
+Unplug and replug
+ls -l /dev/bus/usb/002/024
+
+#### dialout group
+```
+groups
+```
+Verify `dialout` group is listed
+If not :
+```
+sudo usermod -a -G dialout $USER
+su - $USER
+groups
+```
+(to make it permanent, you have to logout and login back)
+
+### test
+```
+avrdude -c atmelice_updi -p m4809 -U lock:r:-:h
+```
+
+Enjoy !
