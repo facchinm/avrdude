@@ -1302,8 +1302,11 @@ int main(int argc, char * argv [])
       }
     }
     
+    AVRMEM * m;
+    
     /* Now check what fuses are against what they should be */
-    if (safemodeafter_fuse != safemode_fuse) {
+    m = avr_locate_mem(p, "fuse");
+    if (compare_memory_masked(m, safemodeafter_fuse, safemode_fuse)) {
       fuses_updated = 1;
       avrdude_message(MSG_INFO, "%s: safemode: fuse changed! Was %x, and is now %x\n",
               progname, safemode_fuse, safemodeafter_fuse);
@@ -1331,7 +1334,8 @@ int main(int argc, char * argv [])
     }
 
     /* Now check what fuses are against what they should be */
-    if (safemodeafter_lfuse != safemode_lfuse) {
+    m = avr_locate_mem(p, "lfuse");
+    if (compare_memory_masked(m, safemodeafter_lfuse, safemode_lfuse)) {
       fuses_updated = 1;
       avrdude_message(MSG_INFO, "%s: safemode: lfuse changed! Was %x, and is now %x\n",
               progname, safemode_lfuse, safemodeafter_lfuse);
@@ -1359,7 +1363,8 @@ int main(int argc, char * argv [])
     }
 
     /* Now check what fuses are against what they should be */
-    if (safemodeafter_hfuse != safemode_hfuse) {
+    m = avr_locate_mem(p, "hfuse");
+    if (compare_memory_masked(m, safemodeafter_hfuse, safemode_hfuse)) {
       fuses_updated = 1;
       avrdude_message(MSG_INFO, "%s: safemode: hfuse changed! Was %x, and is now %x\n",
               progname, safemode_hfuse, safemodeafter_hfuse);
@@ -1384,7 +1389,8 @@ int main(int argc, char * argv [])
     }
 
     /* Now check what fuses are against what they should be */
-    if (safemodeafter_efuse != safemode_efuse) {
+    m = avr_locate_mem(p, "efuse");
+    if (compare_memory_masked(m, safemodeafter_efuse, safemode_efuse)) {
       fuses_updated = 1;
       avrdude_message(MSG_INFO, "%s: safemode: efuse changed! Was %x, and is now %x\n",
               progname, safemode_efuse, safemodeafter_efuse);
@@ -1412,7 +1418,7 @@ int main(int argc, char * argv [])
       avrdude_message(MSG_INFO, "%s: safemode: ", progname);
       if (failures == 0) {
         avrdude_message(MSG_INFO, "Fuses OK (E:%02X, H:%02X, L:%02X)\n",
-                safemode_efuse, safemode_hfuse, safemode_lfuse);
+                safemodeafter_efuse, safemodeafter_hfuse, safemodeafter_lfuse);
       }
       else {
         avrdude_message(MSG_INFO, "Fuses not recovered, sorry\n");
