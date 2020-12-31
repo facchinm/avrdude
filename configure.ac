@@ -78,7 +78,7 @@ dnl Makefile.am:77: compiling `config_gram.c' with per-target flags requires `AM
 AM_PROG_CC_C_O
 
 # Checks for libraries.
-AC_CHECK_LIB([termcap], [tputs])
+AC_CHECK_LIB([ncurses], [tputs])
 AC_CHECK_LIB([ncurses], [tputs])
 AC_CHECK_LIB([readline], [readline])
 AH_TEMPLATE([HAVE_LIBELF],
@@ -167,7 +167,9 @@ AC_SUBST(LIBUSB_1_0, $LIBUSB_1_0)
 
 AH_TEMPLATE([HAVE_LIBHIDAPI],
             [Define if HID support is enabled via libhidapi])
-AC_SEARCH_LIBS([hid_init], [hidapi hidapi-libusb hidapi-hidraw], [have_libhidapi=yes])
+for _hidapi_lib in hidapi hidapi-hidraw hidapi-libusb; do
+	PKG_CHECK_MODULES([hidapi],[$_hidapi_lib],[have_libhidapi=yes],[true])
+done
 if test x$have_libhidapi = xyes; then
    case $target in
        *-*-darwin*)
@@ -177,11 +179,8 @@ if test x$have_libhidapi = xyes; then
                LIBHIDAPI="$ac_cv_lib_hid_init"
                ;;
    esac
-   AC_DEFINE([HAVE_LIBHIDAPI])
-   AC_CHECK_HEADERS([hidapi/hidapi.h])
 fi
 AC_SUBST(LIBHIDAPI, $LIBHIDAPI)
-
 
 AH_TEMPLATE([HAVE_LIBFTDI1],
             [Define if FTDI support is enabled via libftdi1])
