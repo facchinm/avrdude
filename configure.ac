@@ -23,7 +23,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.60)
-AC_INIT(avrdude, 6.3-20171130, avrdude-dev@nongnu.org)
+AC_INIT(avrdude, 6.3-m4_esyscmd([git log -1 --date=short --pretty="format:%ad" | tr -d -]), avrdude-dev@nongnu.org)
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
@@ -78,12 +78,12 @@ dnl Makefile.am:77: compiling `config_gram.c' with per-target flags requires `AM
 AM_PROG_CC_C_O
 
 # Checks for libraries.
-AC_CHECK_LIB([termcap], [tputs])
+AC_CHECK_LIB([ncurses], [tputs])
 AC_CHECK_LIB([ncurses], [tputs])
 AC_CHECK_LIB([readline], [readline])
 AH_TEMPLATE([HAVE_LIBELF],
             [Define if ELF support is enabled via libelf])
-AC_CHECK_LIB([elf], [elf_getshdrstrndx], [have_libelf=yes])
+AC_CHECK_HEADERS([libelf.h libelf/libelf.h], [have_libelf=yes])
 if test x$have_libelf = xyes; then
    case $target in
        *)
@@ -99,7 +99,7 @@ AC_SEARCH_LIBS([gethostent], [nsl])
 AC_SEARCH_LIBS([setsockopt], [socket])
 AH_TEMPLATE([HAVE_LIBUSB],
             [Define if USB support is enabled via libusb])
-AC_CHECK_LIB([usb], [usb_get_string_simple], [have_libusb=yes])
+AC_CHECK_HEADERS([lusb0_usb.h usb.h], [have_libusb=yes])
 if test x$have_libusb = xyes; then
    case $target in
        *-*-darwin*)
@@ -129,7 +129,7 @@ AC_ARG_ENABLE(
 
 AH_TEMPLATE([HAVE_LIBUSB_1_0],
             [Define if USB support is enabled via libusb 1.0])
-AC_CHECK_LIB([usb-1.0], [libusb_init], [have_libusb_1_0=yes])
+AC_CHECK_HEADERS([libusb-1.0/libusb.h libusb.h], [have_libusb_1_0=yes])
 if test x$have_libusb_1_0 = xyes && test x$enabled_libusb_1_0 = xyes; then
    case $target in
        *-*-darwin*)
@@ -167,7 +167,9 @@ AC_SUBST(LIBUSB_1_0, $LIBUSB_1_0)
 
 AH_TEMPLATE([HAVE_LIBHIDAPI],
             [Define if HID support is enabled via libhidapi])
-AC_SEARCH_LIBS([hid_init], [hidapi hidapi-libusb hidapi-hidraw], [have_libhidapi=yes])
+for _hidapi_lib in hidapi hidapi-hidraw hidapi-libusb; do
+	PKG_CHECK_MODULES([hidapi],[$_hidapi_lib],[have_libhidapi=yes],[true])
+done
 if test x$have_libhidapi = xyes; then
    case $target in
        *-*-darwin*)
@@ -177,11 +179,8 @@ if test x$have_libhidapi = xyes; then
                LIBHIDAPI="$ac_cv_lib_hid_init"
                ;;
    esac
-   AC_DEFINE([HAVE_LIBHIDAPI])
-   AC_CHECK_HEADERS([hidapi/hidapi.h])
 fi
 AC_SUBST(LIBHIDAPI, $LIBHIDAPI)
-
 
 AH_TEMPLATE([HAVE_LIBFTDI1],
             [Define if FTDI support is enabled via libftdi1])
@@ -189,7 +188,7 @@ AH_TEMPLATE([HAVE_LIBFTDI],
             [Define if FTDI support is enabled via libftdi])
 AH_TEMPLATE([HAVE_LIBFTDI_TYPE_232H],
             [Define if libftdi supports FT232H, libftdi version >= 0.20])
-AC_CHECK_LIB([ftdi1], [ftdi_new], [have_libftdi1=yes], [], [$LIBUSB_1_0])
+AC_CHECK_HEADERS([libftdi1/ftdi.h],  [have_libftdi1=yes])
 AC_CHECK_LIB([ftdi], [ftdi_usb_get_strings], [have_libftdi=yes], [], [-lusb])
 if test x$have_libftdi1 = xyes; then
    LIBFTDI1="-lftdi1"
@@ -237,9 +236,12 @@ SAVED_LIBS="${LIBS}"
 case $target in
         *-*-mingw32* | *-*-cygwin* | *-*-windows*)
 		LIBHID="-lhid -lsetupapi"
-		if test $ac_cv_header_ddk_hidsdi_h = yes
+		if test x$ac_cv_header_ddk_hidsdi_h = xyes
 		then
 			HIDINCLUDE="#include <ddk/hidsdi.h>"
+		elif test x$ac_cv_header_hidsdi_h = xyes
+		then
+			HIDINCLUDE="#include <hidsdi.h>"
 		else
 			HIDINCLUDE="#include \"my_ddk_hidsdi.h\""
 		fi
