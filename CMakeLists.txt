@@ -110,22 +110,12 @@ endif()
 # Detect installed libraries
 # =====================================
 
-# Prefer static libraries over DLLs on Windows
-if(WIN32)
-    set(PREFERRED_LIBELF libelf.a elf)
-    set(PREFERRED_LIBUSB libusb.a usb)
-    set(PREFERRED_LIBUSB_1_0 libusb-1.0.a usb-1.0)
-    set(PREFERRED_LIBHIDAPI libhidapi.a libhidapi-libusb.a libhidapi-hidraw.a hidapi hidapi-libusb hidapi-hidraw)
-    set(PREFERRED_LIBFTDI libftdi.a ftdi)
-    set(PREFERRED_LIBFTDI1 libftdi1.a ftdi1)
-else()
-    set(PREFERRED_LIBELF elf)
-    set(PREFERRED_LIBUSB usb)
-    set(PREFERRED_LIBUSB_1_0 usb-1.0)
-    set(PREFERRED_LIBHIDAPI hidapi hidapi-libusb hidapi-hidraw)
-    set(PREFERRED_LIBFTDI ftdi)
-    set(PREFERRED_LIBFTDI1 ftdi1)
-endif()
+set(PREFERRED_LIBELF libelf.a elf)
+set(PREFERRED_LIBUSB libusb.a usb)
+set(PREFERRED_LIBUSB_1_0 libusb-1.0.a usb-1.0)
+set(PREFERRED_LIBHIDAPI libhidapi.a libhidapi-libusb.a libhidapi-hidraw.a hidapi hidapi-libusb hidapi-hidraw)
+set(PREFERRED_LIBFTDI libftdi.a ftdi)
+set(PREFERRED_LIBFTDI1 libftdi1.a ftdi1)
 
 # -------------------------------------
 # Find libelf
