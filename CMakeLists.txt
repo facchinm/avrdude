@@ -207,6 +207,16 @@ if(HAVE_LIBREADLINE)
     set(LIB_LIBREADLINE ${HAVE_LIBREADLINE})
 endif()
 
+find_library(HAVE_LIBNCURSES NAMES ncurses)
+if(HAVE_LIBNCURSES)
+    set(LIB_LIBNCURSES ${HAVE_LIBNCURSES})
+endif()
+
+find_library(HAVE_LIBTINFO NAMES tinfo)
+if(HAVE_LIBTINFO)
+    set(LIB_LIBTINFO ${HAVE_LIBTINFO})
+endif()
+
 # =====================================
 # Use external libraries if requested
 # =====================================
